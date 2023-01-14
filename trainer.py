@@ -17,11 +17,11 @@ class Trainer(nn.Module) :
         size = len(data.dataset)
         for batch, (X, y) in enumerate(data) :
             self.optimizer.zero_grad()
-            y_hat = self.model(X) #
-            self.loss = self.loss_fn(y_hat, y)
-            self.loss.backward()
-            self.optimizer.step()
-            if batch % 100 == 0:
+            y_hat = self.model(X) # prediction
+            self.loss = self.loss_fn(y_hat, y) # Loss
+            self.loss.backward() # back prop
+            self.optimizer.step() # update
+            if batch % 5 == 0 :
                 loss, current = self.loss.item(), batch * len(X)
                 print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
     
@@ -49,8 +49,11 @@ class Trainer(nn.Module) :
     def run(self,train_data, test_data) :
         
         for epoch in range(self.epochs) :
+            print(f"epoch : {epoch}")
             self.train(train_data)
             loss, precision = self.test(test_data)
             #if epoch%100== 0 :
-            #    path = "./checkpoints/checkpoint_" + str(epoch) + ".cpkt"
-            #    self.save(epoch=epoch, loss=loss, precision=precision, path=path)
+            #    
+            # 
+        path = "./checkpoints/checkpoint_" + str(self.epochs) + ".cpkt"
+        self.save(epoch=epoch, loss=loss, precision=precision, path=path)
