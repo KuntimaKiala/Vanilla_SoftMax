@@ -1,1 +1,1 @@
-# nn_softmax
+# Vanilla_softmax
