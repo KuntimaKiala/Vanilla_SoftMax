@@ -6,7 +6,7 @@ from trainer import Trainer
 
 if __name__ == '__main__' :
     device = torch.device('cuda0' if torch.cuda.is_available() else 'cpu')
-    data_handler = DataHandler(datasets=datasets.FashionMNIST,download=False, shuffle=True, batch_size=1024) 
+    data_handler = DataHandler(datasets=datasets.FashionMNIST,download=False, shuffle=True, batch_size=64) 
     training_dataset, validation_dataset = data_handler.dataset()
     training_data, validation_data = data_handler.DataLoader(training_dataset, validation_dataset)
     input_size = next(iter(training_data))[0].shape[2] * next(iter(training_data))[0].shape[3]

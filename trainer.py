@@ -21,7 +21,7 @@ class Trainer(nn.Module) :
             self.loss = self.loss_fn(y_hat, y) # Loss
             self.loss.backward() # back prop
             self.optimizer.step() # update
-            if batch % 5 == 0 :
+            if batch % 100 == 0 :
                 loss, current = self.loss.item(), batch * len(X)
                 print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
     
@@ -47,13 +47,12 @@ class Trainer(nn.Module) :
                     'loss': loss,}, path)
         
     def run(self,train_data, test_data) :
-        
+        accuracy = 0 
         for epoch in range(self.epochs) :
             print(f"epoch : {epoch}")
             self.train(train_data)
             loss, precision = self.test(test_data)
-            #if epoch%100== 0 :
-            #    
-            # 
-        path = "./checkpoints/checkpoint_" + str(self.epochs) + ".cpkt"
-        self.save(epoch=epoch, loss=loss, precision=precision, path=path)
+            path = "./checkpoints/checkpoint.cpkt"
+            if precision > accuracy :
+                self.save(epoch=epoch, loss=loss, precision=precision, path=path)
+                accuracy = precision
