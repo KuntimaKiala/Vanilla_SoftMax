@@ -14,12 +14,16 @@ class Trainer(nn.Module) :
     
     def train(self, data) :
         self.model.train()
-        for X, y in data :
-            self.optimizer.zero_grad
+        size = len(data.dataset)
+        for batch, (X, y) in enumerate(data) :
+            self.optimizer.zero_grad()
             y_hat = self.model(X) #
             self.loss = self.loss_fn(y_hat, y)
             self.loss.backward()
             self.optimizer.step()
+            if batch % 100 == 0:
+                loss, current = self.loss.item(), batch * len(X)
+                print(f"loss: {loss:>7f}  [{current:>5d}/{size:>5d}]")
     
     def test(self, data) :
         precision, loss, num_batches, size = 0, 0, len(data), len(data.dataset)
@@ -31,7 +35,7 @@ class Trainer(nn.Module) :
                 precision += (y_hat.argmax(dim=1) == y).type(torch.float).sum(axis=0).item()
         loss      /= num_batches
         precision /= size
-        print(f"Test Error: \n Accuracy: {(100*precision):>0.1f}%, Avg loss: {loss:>8f} \n")
+        print(f"Test Error: \n Accuracy: {(100*precision):>0.3f}%, Avg loss: {loss:>8f} \n")
         return loss, precision
     
     def save(self, epoch, loss, precision, path) :
@@ -47,5 +51,6 @@ class Trainer(nn.Module) :
         for epoch in range(self.epochs) :
             self.train(train_data)
             loss, precision = self.test(test_data)
-            path = "/checkpoints/checkpoint_" + str(epoch) + ".cpkt"
-            self.save(epoch=epoch, loss=loss, precision=precision, path=path)
+            #if epoch%100== 0 :
+            #    path = "./checkpoints/checkpoint_" + str(epoch) + ".cpkt"
+            #    self.save(epoch=epoch, loss=loss, precision=precision, path=path)

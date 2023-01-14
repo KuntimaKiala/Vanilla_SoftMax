@@ -1,1 +1,3 @@
-# nn_softmax
+# Vanilla SoftMax 
+
+Case Study : Linear Regression
