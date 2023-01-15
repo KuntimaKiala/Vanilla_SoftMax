@@ -45,8 +45,31 @@ class Trainer(nn.Module) :
                     'model_state_dict': self.model.state_dict(),
                     'optimizer_state_dict': self.optimizer.state_dict(),
                     'loss': loss,}, path)
+    
+    def inference(self, data) :
+        classes = [
+        "T-shirt/top",
+        "Trouser",
+        "Pullover",
+        "Dress",
+        "Coat",
+        "Sandal",
+        "Shirt",
+        "Sneaker",
+        "Bag",
+        "Ankle boot"]
+
+        self.model.eval()
         
+        with torch.no_grad():
+            for X, y in data :
+                pred = self.model(X)
+                predicted, actual = classes[pred[0].argmax(0)], classes[y]
+                print(f'Predicted: "{predicted}", Actual: "{actual}"')
+            
+    
     def run(self,train_data, test_data) :
+
         accuracy = 0 
         for epoch in range(self.epochs) :
             print(f"epoch : {epoch+1}")
