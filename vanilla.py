@@ -9,16 +9,16 @@ class SoftMax(nn.Module) :
         self.hidden_size = hidden_size
         self.output_size = output_size
         
-        self.layer_0 = nn.Linear(self.input_size,  self.output_size)
-        self.layer_1 = nn.Linear(self.input_size,  self.hidden_size)
-        self.layer_2 = nn.Linear(self.hidden_size, self.hidden_size)
-        self.layer_3 = nn.Linear(self.hidden_size, self.output_size)
+        self.fcl_0 = nn.Linear(self.input_size,  self.output_size)
+        self.fcl_1 = nn.Linear(self.input_size,  self.hidden_size)
+        self.fcl_2 = nn.Linear(self.hidden_size, self.hidden_size)
+        self.fcl_3 = nn.Linear(self.hidden_size, self.output_size)
         
         
         if self.hidden_size != 1 :
-            self.softmax_head  = nn.Sequential(nn.Flatten(), self.layer_1, nn.ReLU(), self.layer_2, nn.ReLU(), self.layer_3, nn.Softmax(dim=1))
+            self.softmax_head  = nn.Sequential(nn.Flatten(), self.fcl_1, nn.ReLU(), self.fcl_2, nn.ReLU(), self.fcl_3, nn.Softmax(dim=1))
         else :
-            self.softmax_head  = nn.Sequential(nn.Flatten(), self.layer_0, nn.Softmax(dim=1))
+            self.softmax_head  = nn.Sequential(nn.Flatten(), self.fcl_0, nn.Softmax(dim=1))
             
             
     def forward(self, x) :
