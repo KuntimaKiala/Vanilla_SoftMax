@@ -19,4 +19,4 @@ if __name__ == "__main__" :
     checkpoint = torch.load("./checkpoints/checkpoint.cpkt")
     model.load_state_dict(checkpoint['model_state_dict'],strict=False)
     trainer = Trainer(model=model)
-    trainer.inference(validation_data)
+    trainer.run(None, validation_data, inference=True)
