@@ -96,7 +96,7 @@ class Trainer(nn.Module) :
                 print(f'Predicted: "{predicted}", Actual: "{actual}"')
                 self.draw((X,y))
     
-    def run(self,train_data, test_data, inference) :
+    def run(self,train_data, test_data, inference=False) :
         if inference and train_data==None:
             self.inference(test_data)
             return
