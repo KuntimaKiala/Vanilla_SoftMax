@@ -1,5 +1,6 @@
 import torch 
 from torch import nn, optim
+from d2l import torch as d2l
 
 class Trainer(nn.Module) :
     
@@ -46,8 +47,33 @@ class Trainer(nn.Module) :
                     'optimizer_state_dict': self.optimizer.state_dict(),
                     'loss': loss,}, path)
     
-    def inference(self, data) :
-        from matplotlib.pyplot import plot
+    def draw(self,data) :
+        import matplotlib.pyplot as plt
+        labels_map = {
+                        0: "T-Shirt",
+                        1: "Trouser",
+                        2: "Pullover",
+                        3: "Dress",
+                        4: "Coat",
+                        5: "Sandal",
+                        6: "Shirt",
+                        7: "Sneaker",
+                        8: "Bag",
+                        9: "Ankle Boot",
+                    }
+        
+        fig = plt.figure(figsize=(8, 8))
+        cols, rows = 1, 1
+        for i in range(1, cols * rows + 1):
+            img, label = data
+            fig.add_subplot(rows, cols, i)
+            plt.title(labels_map[label.item()])
+            plt.axis("off")
+            plt.imshow(img.squeeze(), cmap="turbo")
+        plt.show()
+        
+    def inference(self, data, n=1) :
+        
         
         classes = [
         "T-shirt/top",
@@ -68,7 +94,7 @@ class Trainer(nn.Module) :
                 pred = self.model(X)
                 predicted, actual = classes[pred[0].argmax(0)], classes[y]
                 print(f'Predicted: "{predicted}", Actual: "{actual}"')
-                # TODO : plot the objet
+                self.draw((X,y))
     
     def run(self,train_data, test_data, inference) :
         if inference and train_data==None:
