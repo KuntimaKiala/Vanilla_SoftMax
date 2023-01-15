@@ -47,6 +47,8 @@ class Trainer(nn.Module) :
                     'loss': loss,}, path)
     
     def inference(self, data) :
+        from matplotlib.pyplot import plot
+        
         classes = [
         "T-shirt/top",
         "Trouser",
@@ -66,7 +68,7 @@ class Trainer(nn.Module) :
                 pred = self.model(X)
                 predicted, actual = classes[pred[0].argmax(0)], classes[y]
                 print(f'Predicted: "{predicted}", Actual: "{actual}"')
-            
+                # TODO : plot the objet
     
     def run(self,train_data, test_data, inference) :
         if inference and train_data==None:

@@ -1,5 +1,4 @@
 import torch
-from matplotlib.pyplot import plot
 from DataLoading import DataHandler
 from torchvision import datasets
 from vanilla import SoftMax
