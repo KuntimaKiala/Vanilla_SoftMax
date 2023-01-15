@@ -68,8 +68,11 @@ class Trainer(nn.Module) :
                 print(f'Predicted: "{predicted}", Actual: "{actual}"')
             
     
-    def run(self,train_data, test_data) :
-
+    def run(self,train_data, test_data, inference) :
+        if inference and train_data==None:
+            self.inference(test_data)
+            return
+        
         accuracy = 0 
         for epoch in range(self.epochs) :
             print(f"epoch : {epoch+1}")
