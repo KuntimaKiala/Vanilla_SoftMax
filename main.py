@@ -14,5 +14,5 @@ if __name__ == '__main__' :
     output_size = 10
     model = SoftMax(input_size, hidden_size, output_size)
     model.to(device=device)
-    trainer = Trainer(model=model, epochs=500, learning_rate=0.001, momentum=0.89)
+    trainer = Trainer(model=model, epochs=50, learning_rate=0.001, momentum=0.89)
     trainer.run(training_data, validation_data)
