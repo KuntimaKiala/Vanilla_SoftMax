@@ -1,7 +1,6 @@
 from torch.utils.data import DataLoader
 from torchvision.transforms import ToTensor
 
-
 class DataHandler() :
     def __init__(self, datasets, shuffle=True, download=False, batch_size = 32) :
         self.shuffle    = shuffle

@@ -10,9 +10,9 @@ if __name__ == '__main__' :
     training_dataset, validation_dataset = data_handler.dataset()
     training_data, validation_data = data_handler.DataLoader(training_dataset, validation_dataset)
     input_size = next(iter(training_data))[0].shape[2] * next(iter(training_data))[0].shape[3]
-    hidden_size = 512
+    hidden_size = 1
     output_size = 10
     model = SoftMax(input_size, hidden_size, output_size)
     model.to(device=device)
-    trainer = Trainer(model=model, epochs=50, learning_rate=0.001, momentum=0.89)
+    trainer = Trainer(model=model, epochs=50, learning_rate=0.0001, momentum=0.89)
     trainer.run(training_data, validation_data)

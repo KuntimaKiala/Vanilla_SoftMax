@@ -49,10 +49,11 @@ class Trainer(nn.Module) :
     def run(self,train_data, test_data) :
         accuracy = 0 
         for epoch in range(self.epochs) :
-            print(f"epoch : {epoch}")
+            print(f"epoch : {epoch+1}")
             self.train(train_data)
             loss, precision = self.test(test_data)
             path = "./checkpoints/checkpoint.cpkt"
             if precision > accuracy :
                 self.save(epoch=epoch, loss=loss, precision=precision, path=path)
                 accuracy = precision
+        print('best accuracy :', accuracy)
